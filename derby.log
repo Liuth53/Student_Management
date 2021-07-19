@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Jul 18 11:34:24 UTC 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.15.2.0 - (1873585): instance a816c00e-017a-b965-54c7-0000075849a8 
+on database directory G:\WeChat Files\wxid_jg0wfi5n9cp11\FileStorage\File\2021-07\R交通_23转入_孙宝森\R交通_23转入_孙宝森\医院挂号\医院挂号系统 with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5b37e0d2 
+Loaded from file:/C:/Users/Liuth53/AppData/Roaming/JetBrains/IntelliJIdea2021.1/jdbc-drivers/Apache%20Derby/10.15.2.0/derby-10.15.2.0.jar
+java.vendor=JetBrains s.r.o.
+java.runtime.version=11.0.10+9-b1341.41
+user.dir=C:\Users\Liuth53\Desktop\IdeaProjects\Student_Management
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
