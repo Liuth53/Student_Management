@@ -51,34 +51,31 @@ public class UpdateGradeDialog extends JDialog {
         //组装按钮
         Box btnBox = Box.createHorizontalBox();
         JButton addBtn = new JButton("Modify");
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //获取用户的录入
-                String CourseID = nameField.getText().trim();
-                String grade = passwordField.getText().trim();
+        addBtn.addActionListener(e -> {
+            //获取用户的录入
+            String CourseID = nameField.getText().trim();
+            String grade = passwordField.getText().trim();
 
 
 
 
-                Map<String,String> params = new HashMap<>();
-                params.put("Name", CourseID);
+            Map<String,String> params = new HashMap<>();
+            params.put("Name", CourseID);
 
-                params.put("Post", grade);
-                int id1 = Integer.parseInt(id);
-                int i = adminDAO.update(
-                        "update studentsgrade set ID =?,`CourseID`=?,`grade`=? where ID = ?"
-                        ,id1, CourseID, grade,id1);
-                JTextArea jta = new JTextArea(6, 30);
-                if (i != -1){
-                    jta.setText("Successful");
-                    dispose();
+            params.put("Post", grade);
+            int id1 = Integer.parseInt(id);
+            int i = gradeDAO.update(
+                    "update studentsgrade set ID =?,`CourseID`=?,`grade`=? where ID = ?"
+                    ,id1, CourseID, grade,id1);
+            JTextArea jta = new JTextArea(6, 30);
+            if (i != -1){
+                jta.setText("Successful");
+                dispose();
 
-                }
-                else {jta.setText("Failed"); }
-
-                JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
             }
+            else {jta.setText("Failed"); }
+
+            JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
         });
 
 

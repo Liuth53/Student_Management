@@ -55,13 +55,8 @@ public class GradeInfoComponent extends Box {
         JButton downBtn = new JButton("Descending Order");
 
         addBtn.addActionListener(e -> {
-            //弹出一个对话框，让用户输入图书的信息
-            new AddGradeDialog(jf, "Add Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            }).setVisible(true);
+            //弹出一个对话框，让用户输入信息
+            new AddGradeDialog(jf, "Add Information", true, result -> requestData(1)).setVisible(true);
         });
 
         JButton searchBtn1 = new JButton(new AbstractAction("Search By StudentID") {
@@ -100,12 +95,7 @@ public class GradeInfoComponent extends Box {
 
             String id = tableModel.getValueAt(selectedRow, 0).toString();
             //弹出一个对话框，让用户修改
-            new UpdateGradeDialog(jf, "Modify Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            },id).setVisible(true);
+            new UpdateGradeDialog(jf, "Modify Information", true, result -> requestData(1),id).setVisible(true);
         });
 
         deleteBtn.addActionListener(e -> {

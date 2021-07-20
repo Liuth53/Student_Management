@@ -5,8 +5,6 @@ import servace.listener.ActionDoneListener;
 import utils.ScreenUtils;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,34 +54,31 @@ public class UpdateAdminDialog extends JDialog {
         //组装按钮
         Box btnBox = Box.createHorizontalBox();
         JButton addBtn = new JButton("Modify");
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //获取用户的录入
-                String name = nameField.getText().trim();
-                String password = passwordField.getText().trim();
-                String post = postField.getText().trim();
+        addBtn.addActionListener(e -> {
+            //获取用户的录入
+            String name = nameField.getText().trim();
+            String password = passwordField.getText().trim();
+            String post = postField.getText().trim();
 
 
 
-                Map<String,String> params = new HashMap<>();
-                params.put("Name",name);
-                params.put("Password", post);
-                params.put("Post", password);
-                int id1 = Integer.parseInt(id);
-                int i = adminDAO.update(
-                        "update administered set TeacherID =?,`Name`=?,`password`=?,post =? where TeacherID = ?"
-                        ,id1, name , password , post,id1);
-                JTextArea jta = new JTextArea(6, 30);
-                if (i != -1){
-                    jta.setText("Successful");
-                    dispose();
+            Map<String,String> params = new HashMap<>();
+            params.put("Name",name);
+            params.put("Password", post);
+            params.put("Post", password);
+            int id1 = Integer.parseInt(id);
+            int i = adminDAO.update(
+                    "update administered set TeacherID =?,`Name`=?,`password`=?,post =? where TeacherID = ?"
+                    ,id1, name , password , post,id1);
+            JTextArea jta = new JTextArea(6, 30);
+            if (i != -1){
+                jta.setText("Successful");
+                dispose();
 
-                }
-                else {jta.setText("Failed"); }
-
-                JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
             }
+            else {jta.setText("Failed"); }
+
+            JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
         });
 
 

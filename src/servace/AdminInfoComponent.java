@@ -53,15 +53,23 @@ public class AdminInfoComponent extends Box {
 //        Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）。
 //
 //        使用 Lambda 表达式可以使代码变的更加简洁紧凑。
-        addBtn.addActionListener(e -> {
-            //弹出一个对话框，让用户输入图书的信息
-            new AddAdminDialog(jf, "Add Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            }).setVisible(true);
-        });
+
+
+//        addBtn.addActionListener(new ActionListener() {       //使用匿名类创建监听器
+//            @Override
+//            public void actionPerformed(ActionEvent e) 
+//                //匿名类创建窗口
+//                new AddAdminDialog(jf, "Add Information", true, new ActionDoneListener() {
+//                    @Override
+//                    public void done(Object result) {
+//                        requestData(1);
+//                    }
+//                }).setVisible(true);
+//            }
+//        });
+
+        //弹出一个对话框，让用户输入信息
+        addBtn.addActionListener(e -> new AddAdminDialog(jf, "Add Information", true, result -> requestData(1)).setVisible(true));
 
         updateBtn.addActionListener(e -> {
             //获取当前表格选中的id
@@ -74,12 +82,9 @@ public class AdminInfoComponent extends Box {
 
             String id1 = tableModel.getValueAt(selectedRow, 0).toString();
             //弹出一个对话框，让用户修改
-            new UpdateAdminDialog(jf, "Modify Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    if (identify == 1)
-                    requestData(1);
-                }
+            new UpdateAdminDialog(jf, "Modify Information", true, result -> {
+                if (identify == 1)
+                requestData(1);
             }, id1).setVisible(true);
         });
 
@@ -168,7 +173,7 @@ public class AdminInfoComponent extends Box {
 //        Vector<Vector>vectors=ListToVector.ListTOVector1(studentInfosList);
         Vector<Vector>vectors = new Vector<>();
         for (int i1 = 0; i1 <= adminInfosList.size()-1; i1++){
-            AdminInfo info = new AdminInfo();
+            AdminInfo info;
             info = adminInfosList.get(i1);
             Vector vector = new Vector<>();
             vector.add(info.getTeacherID());
@@ -180,10 +185,8 @@ public class AdminInfoComponent extends Box {
         //清空表格
         tableData.clear();
         //插入数据
-        for (Vector vector : vectors) {
-            tableData.add(vector);
-//            new AddToModel(tableModel).addValueWithThread(vector);
-        }
+        //            new AddToModel(tableModel).addValueWithThread(vector);
+        tableData.addAll(vectors);
         //刷新表格
         tableModel.fireTableDataChanged();
     }

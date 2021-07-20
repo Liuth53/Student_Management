@@ -46,13 +46,8 @@ public class BasicInfoComponent extends Box {
         JButton downBtn = new JButton("Descending Order");
 
         addBtn.addActionListener(e -> {
-            //弹出一个对话框，让用户输入图书的信息
-            new AddDialog(jf, "Add Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            }).setVisible(true);
+            //弹出一个对话框，让用户输入信息
+            new AddDialog(jf, "Add Information", true, result -> requestData(1)).setVisible(true);
         });
         updateBtn.addActionListener(e -> {
             //获取当前表格选中的id
@@ -65,12 +60,7 @@ public class BasicInfoComponent extends Box {
 
             String id1 = tableModel.getValueAt(selectedRow, 0).toString();
             //弹出一个对话框，让用户修改
-            new UpdateDialog(jf, "Modify Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            }, id1).setVisible(true);
+            new UpdateDialog(jf, "Modify Information", true, result -> requestData(1), id1).setVisible(true);
         });
         deleteBtn.addActionListener(e -> {
             //获取选中的条目

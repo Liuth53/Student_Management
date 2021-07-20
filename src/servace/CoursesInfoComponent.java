@@ -52,13 +52,8 @@ public class CoursesInfoComponent extends Box {
         JButton downBtn = new JButton("Descending Order");
 
         addBtn.addActionListener(e -> {
-            //弹出一个对话框，让用户输入图书的信息
-            new AddAdminDialog(jf, "Add Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            }).setVisible(true);
+            //弹出一个对话框，让用户输入信息
+            new AddAdminDialog(jf, "Add Information", true, result -> requestData(1)).setVisible(true);
         });
 
         updateBtn.addActionListener(e -> {
@@ -72,12 +67,7 @@ public class CoursesInfoComponent extends Box {
 
             String id = tableModel.getValueAt(selectedRow, 0).toString();
             //弹出一个对话框，让用户修改
-            new UpdateAdminDialog(jf, "Modify Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            },id).setVisible(true);
+            new UpdateAdminDialog(jf, "Modify Information", true, result -> requestData(1),id).setVisible(true);
         });
 
         deleteBtn.addActionListener(e -> {
@@ -114,6 +104,7 @@ public class CoursesInfoComponent extends Box {
         upBtn.addActionListener(e -> requestData(2));
 
         downBtn.addActionListener(e -> requestData(3));
+
         if (identify == 1){
             btnPanel.add(addBtn);
             btnPanel.add(updateBtn);

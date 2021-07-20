@@ -112,14 +112,11 @@ public class AddDialog extends JFrame {
         Box1.add(Box.createHorizontalStrut(20));
         Box1.add(comboBox);
         StringBuffer teacherName = new StringBuffer();
-        comboBox.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() ==ItemEvent.SELECTED){
-                    teacherName.delete(0,teacherName.length());
-                    teacherName.append(e.getItem().toString());
+        comboBox.addItemListener(e -> {
+            if (e.getStateChange() ==ItemEvent.SELECTED){
+                teacherName.delete(0,teacherName.length());
+                teacherName.append(e.getItem().toString());
 //                    System.out.println(teacherName);
-                }
             }
         });
 
@@ -127,34 +124,31 @@ public class AddDialog extends JFrame {
         Box btnBox = Box.createHorizontalBox();
         JButton addBtn = new JButton("Add");
         JButton close = new JButton("Close");
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //获取用户的录入
-                String name = nameField.getText().trim();
-                String password = pwField.getText().trim();
-                String sex = bg.isSelected(maleBtn.getModel())? maleBtn.getText():femaleBtn.getText();
-                String phone = phoneField.getText().trim();
+        addBtn.addActionListener(e -> {
+            //获取用户的录入
+            String name = nameField.getText().trim();
+            String password = pwField.getText().trim();
+            String sex = bg.isSelected(maleBtn.getModel())? maleBtn.getText():femaleBtn.getText();
+            String phone = phoneField.getText().trim();
 //                String birthday = dateChooserJButton.getText().trim();
-                Date birthday = dateChooserJButton.getDate();
-                String teacher = comboBox.getSelectedItem().toString();
+            Date birthday = dateChooserJButton.getDate();
+            String teacher = comboBox.getSelectedItem().toString();
 
-                Map<String,String> params = new HashMap<>();
-                params.put("name",name);
-                params.put("sex", sex);
-                params.put("phone", phone);
-                params.put("password", password);
-                params.put("birthday", String.valueOf(birthday));
+            Map<String,String> params = new HashMap<>();
+            params.put("name",name);
+            params.put("sex", sex);
+            params.put("phone", phone);
+            params.put("password", password);
+            params.put("birthday", String.valueOf(birthday));
 
-                int i = studentInfoDAO.update("insert into basicinformation values(?,?,?,?,?,?,?)", null, name, password, sex, phone, birthday, teacher);
-                JTextArea jta = new JTextArea(6, 30);
-                if (i != -1){
-                    jta.setText("Successful");
-                    dispose();
-                }
-                else {jta.setText("Failed"); }
-                JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
+            int i = studentInfoDAO.update("insert into basicinformation values(?,?,?,?,?,?,?)", null, name, password, sex, phone, birthday, teacher);
+            JTextArea jta = new JTextArea(6, 30);
+            if (i != -1){
+                jta.setText("Successful");
+                dispose();
             }
+            else {jta.setText("Failed"); }
+            JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
         });
 
         //组装纵向视图

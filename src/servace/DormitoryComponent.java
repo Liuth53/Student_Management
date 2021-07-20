@@ -54,17 +54,9 @@ public class DormitoryComponent extends Box {
         JButton upBtn = new JButton("Ascending Order");
         JButton downBtn = new JButton("Descending Order");
 
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //弹出一个对话框，让用户输入图书的信息
-                new AddGradeDialog(jf, "Add Information", true, new ActionDoneListener() {
-                    @Override
-                    public void done(Object result) {
-                        requestData(1);
-                    }
-                }).setVisible(true);
-            }
+        addBtn.addActionListener(e -> {
+            //弹出一个对话框，让用户输入信息
+            new AddGradeDialog(jf, "Add Information", true, result -> requestData(1)).setVisible(true);
         });
         JButton searchBtn1 = new JButton(new AbstractAction("Search By StudentID") {
             @Override
@@ -100,65 +92,42 @@ public class DormitoryComponent extends Box {
 
             String id = tableModel.getValueAt(selectedRow, 0).toString();
             //弹出一个对话框，让用户修改
-            new UpdateAdminDialog(jf, "Modify Information", true, new ActionDoneListener() {
-                @Override
-                public void done(Object result) {
-                    requestData(1);
-                }
-            },id).setVisible(true);
+            new UpdateAdminDialog(jf, "Modify Information", true, result -> requestData(1),id).setVisible(true);
         });
 
-        deleteBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //获取选中的条目
-                int selectedRow = table.getSelectedRow();//如果有选中的条目，则返回条目的行号，如果没有选中，那么返回-1
+        deleteBtn.addActionListener(e -> {
+            //获取选中的条目
+            int selectedRow = table.getSelectedRow();//如果有选中的条目，则返回条目的行号，如果没有选中，那么返回-1
 
-                if (selectedRow==-1){
-                    JOptionPane.showMessageDialog(jf,"Please select the entry you want to delete!");
-                    return;
-                }
+            if (selectedRow==-1){
+                JOptionPane.showMessageDialog(jf,"Please select the entry you want to delete!");
+                return;
+            }
 
-                //防止误操作
-                int result = JOptionPane.showConfirmDialog(jf, "Are you sure you want to delete the selected entry?", "Confirm", JOptionPane.YES_NO_OPTION);
-                if (result != JOptionPane.YES_OPTION){
-                    return;
-                }
+            //防止误操作
+            int result = JOptionPane.showConfirmDialog(jf, "Are you sure you want to delete the selected entry?", "Confirm", JOptionPane.YES_NO_OPTION);
+            if (result != JOptionPane.YES_OPTION){
+                return;
+            }
 
-                String id = tableModel.getValueAt(selectedRow, 0).toString();
-                String courseID = tableModel.getValueAt(selectedRow,1).toString();
+            String id = tableModel.getValueAt(selectedRow, 0).toString();
+            String courseID = tableModel.getValueAt(selectedRow,1).toString();
 //                System.out.println(id);
 //                System.out.println(courseID);
-                int result1 = adminDAO.update("delete from studentsgrade where ID = ? AND CourseID= ?",id,courseID);
+            int result1 = adminDAO.update("delete from studentsgrade where ID = ? AND CourseID= ?",id,courseID);
 
-                if (result1 > 0){
-                    jta.setText("Successful");
-                    requestData(1);
-                }
-                else {jta.setText("Failed");}
-
-                JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
-
-            }
-        });
-        flashBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+            if (result1 > 0){
+                jta.setText("Successful");
                 requestData(1);
             }
+            else {jta.setText("Failed");}
+
+            JOptionPane.showMessageDialog(jf, jta.getText(), "Load Message", JOptionPane.INFORMATION_MESSAGE);
+
         });
-        upBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                requestData(2);
-            }
-        });
-        downBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                requestData(3);
-            }
-        });
+        flashBtn.addActionListener(e -> requestData(1));
+        upBtn.addActionListener(e -> requestData(2));
+        downBtn.addActionListener(e -> requestData(3));
         if (identify == 1) {
             btnPanel.add(addBtn);
             btnPanel.add(updateBtn);

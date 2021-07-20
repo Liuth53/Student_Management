@@ -1,6 +1,5 @@
 package servace.listener;
 
 public interface SuccessListener {
-
-    public void success(String result);
+    void success(String result);
 }
